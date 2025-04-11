@@ -1,11 +1,13 @@
 from display import Display
 from buttons import ButtonHandler
 import time
+from gpio import GPIO_Init
 
 menu_options = ["Tools", "Games", "Settings", "About"]
 selected = 0
 
 def main():
+    GPIO_Init()
     global selected
     display = Display()
     buttons = ButtonHandler()
