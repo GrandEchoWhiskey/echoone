@@ -20,6 +20,7 @@ class Display:
             color = 'white' if i != selected else 'cyan'
             self.draw.text((10, y), f"{'>' if i == selected else ' '} {option}", font=self.font, fill=color)
 
+        self.image.paste(self.image, (-2, -2))
         self.lcd.showImage(self.image)
 
     def clear(self):
