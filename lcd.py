@@ -25,7 +25,7 @@ class LCD:
     def __init__(self) -> None:
         self.__setup__()
         self.init(SCAN_DIR_DFT)
-        self.__pins = LCD_PINS
+        self.pins = LCD_PINS
         self.width = LCD_TYPES[LCD_TYPE]['width']
         self.height = LCD_TYPES[LCD_TYPE]['height']
         self.xadjust = LCD_TYPES[LCD_TYPE]['x_adjust']
@@ -41,19 +41,15 @@ class LCD:
 
     @property
     def RST_PIN(self) -> int:
-        return self.__pins['RST']
+        return self.pins['RST']
     
     @property
     def DC_PIN(self) -> int:
-        return self.__pins['DC']
-    
-    @property
-    def CS_PIN(self) -> int:
-        return self.__pins['CS']
+        return self.pins['DC']
     
     @property
     def BL_PIN(self) -> int:
-        return self.__pins['BL']
+        return self.pins['BL']
 
     def reset(self) -> None:
         """Reset the LCD display"""
