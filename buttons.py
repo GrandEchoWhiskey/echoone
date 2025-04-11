@@ -2,17 +2,33 @@ from gpio import *
 import RPi.GPIO as GPIO
 import time
 
-# darksidesync helper library
+# BCM button pin numbers
+KEY_PINS = {
+    'KEY1': 21,
+    'KEY2': 20,
+    'KEY3': 16,
+    'UP': 6,
+    'DOWN': 19,
+    'LEFT': 5,
+    'RIGHT': 26,
+    'OK': 13
+}
 
-def callback(channel: int) -> None:
-    """Callback function for button press event."""
-    if channel in KEY_PINS.values():
-        # todo add lock to prevent multiple callbacks
-        name = [key for key, pin in KEY_PINS.items() if pin == channel][0]
-        print(f"Button {name} pressed.")
-        GPIO.add_event_callback(channel, callback=lambda x: None)
+class ButtonHandler:
+    def __init__(self):
+        GPIO.setmode(GPIO.BCM)
+        self.last_pressed = None
+        for pin in KEY_PINS.values():
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-def setup_buttons() -> None:
-    """Set up GPIO buttons."""
-    for pin in KEY_PINS.values():
-        GPIO.add_event_detect(pin, GPIO.FALLING, callback=callback, bouncetime=200)
+    def get_pressed(self):
+        for name, pin in KEY_PINS.items():
+            if GPIO.input(pin) == GPIO.LOW:
+                if self.last_pressed != name:
+                    self.last_pressed = name
+                    return name
+        self.last_pressed = None
+        return None
+
+    def cleanup(self):
+        GPIO.cleanup()

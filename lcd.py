@@ -1,6 +1,7 @@
 from gpio import *
 import RPi.GPIO as GPIO
 import numpy as np
+import spidev
 
 LCD_TYPES = {
     'LCD_1IN44': {'width': 128, 'height': 128, 'x_adjust': 2, 'y_adjust': 1},
@@ -9,35 +10,50 @@ LCD_TYPES = {
 
 LCD_TYPE = 'LCD_1IN44'
 
-LCD_X_MAXPIXEL = 132
-LCD_Y_MAXPIXEL = 162
+# BCM GPIO pin numbers
+LCD_PINS = {
+    'RST': 27,
+    'DC': 25,
+    'BL': 24
+}
 
 SCAN_DIR_DFT = 'U2D_R2L' # D2U_L2R, D2U_R2L, U2D_L2R, U2D_R2L, L2R_U2D, L2R_D2U, R2L_U2D, R2L_D2U
 
+SPI = spidev.SpiDev(0, 0) # SPI device (bus, device)
+
 class LCD:
     def __init__(self) -> None:
-        self.pins = LCD_PINS
+        
+        self.__pins = LCD_PINS
+        self.__spidev = SPI
         self.width = LCD_TYPES[LCD_TYPE]['width']
         self.height = LCD_TYPES[LCD_TYPE]['height']
-        self.scandir = SCAN_DIR_DFT
         self.xadjust = LCD_TYPES[LCD_TYPE]['x_adjust']
         self.yadjust = LCD_TYPES[LCD_TYPE]['y_adjust']
+        self.scandir = SCAN_DIR_DFT
+
+    def __setup__(self) -> None:
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(list(LCD_PINS.values()), GPIO.OUT)
+        self.__spidev.max_speed_hz = 9000000
+        self.__spidev.mode = 0b00
 
     @property
     def RST_PIN(self) -> int:
-        return self.pins['RST']
+        return self.__pins['RST']
     
     @property
     def DC_PIN(self) -> int:
-        return self.pins['DC']
+        return self.__pins['DC']
     
     @property
     def CS_PIN(self) -> int:
-        return self.pins['CS']
+        return self.__pins['CS']
     
     @property
     def BL_PIN(self) -> int:
-        return self.pins['BL']
+        return self.__pins['BL']
 
     def reset(self) -> None:
         """Reset the LCD display"""
