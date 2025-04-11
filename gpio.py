@@ -8,7 +8,6 @@ __all__ = ['delay', 'GPIO_Init', 'LCD_PINS', 'KEY_PINS', 'SPI']
 LCD_PINS = {
     'RST': 27,
     'DC': 25,
-    'CS': 8,
     'BL': 24
 }
 
@@ -24,7 +23,6 @@ KEY_PINS = {
     'OK': 13
 }
 
-
 SPI = spidev.SpiDev(0, 0) # SPI device (bus, device)
 
 def delay(ms: int | float) -> None:
@@ -35,8 +33,8 @@ def GPIO_Init() -> int:
     """Initialize GPIO pins."""
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
-    GPIO.setup(LCD_PINS, GPIO.OUT)
-    GPIO.setup(KEY_PINS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(list(LCD_PINS.values()), GPIO.OUT)
+    GPIO.setup(list(KEY_PINS.values()), GPIO.IN, pull_up_down=GPIO.PUD_UP)
     SPI.max_speed_hz = 9000000
     SPI.mode = 0b00
     return 0

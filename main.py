@@ -10,6 +10,9 @@ from PIL import ImageColor
 
 #try:
 def main():
+    GPIO_Init()
+    setup_buttons()
+    
     LCD = lcd.LCD()
 
     print("**********Init LCD**********")
@@ -32,11 +35,11 @@ def main():
     draw.text((32, 36), 'Electronic ', fill = "BLUE")
     draw.text((28, 48), '1.44inch LCD ', fill = "BLUE")
 
-    LCD.showImage(image,0,0)
+    LCD.showImage(image)
     delay(500)
 
     image = Image.open('time.bmp')
-    LCD.showImage(image,0,0)
+    LCD.showImage(image)
     try:
         while True:
             pass
