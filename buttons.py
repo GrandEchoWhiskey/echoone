@@ -10,9 +10,10 @@ def callback(channel: int) -> None:
         # todo add lock to prevent multiple callbacks
         name = [key for key, pin in KEY_PINS.items() if pin == channel][0]
         print(f"Button {name} pressed.")
+        GPIO.add_event_callback(channel, callback=lambda x: None)
 
 def setup_buttons() -> None:
     """Set up GPIO buttons."""
     for pin in KEY_PINS.values():
-        GPIO.add_event_detect(pin, GPIO.FALLING, bouncetime=20)
+        GPIO.add_event_detect(pin, GPIO.FALLING, bouncetime=200)
         GPIO.add_event_callback(pin, callback=callback)
