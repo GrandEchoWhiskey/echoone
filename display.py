@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import lcd
 
-WIDTH, HEIGHT = 160, 128
+WIDTH, HEIGHT = 128, 128
 
 class Display:
     def __init__(self):
