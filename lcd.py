@@ -23,7 +23,7 @@ SPI = spidev.SpiDev(0, 0) # SPI device (bus, device)
 
 class LCD:
     def __init__(self) -> None:
-        
+        self.__setup__()
         self.__pins = LCD_PINS
         self.__spidev = SPI
         self.width = LCD_TYPES[LCD_TYPE]['width']
