@@ -15,5 +15,4 @@ def callback(channel: int) -> None:
 def setup_buttons() -> None:
     """Set up GPIO buttons."""
     for pin in KEY_PINS.values():
-        GPIO.add_event_detect(pin, GPIO.FALLING, bouncetime=200)
-        GPIO.add_event_callback(pin, callback=callback)
+        GPIO.add_event_detect(pin, GPIO.FALLING, callback=callback, bouncetime=200)
