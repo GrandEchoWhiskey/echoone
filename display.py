@@ -12,7 +12,7 @@ class Display:
         self.font = ImageFont.load_default()
 
     def draw_menu(self, title, options, selected):
-        self.draw.rectangle((0, 0, WIDTH, HEIGHT), fill='black')
+        self.image.paste("black", [0, 0, WIDTH, HEIGHT])
         self.draw.text((5, 0), title, font=self.font, fill='white')
 
         for i, option in enumerate(options):
