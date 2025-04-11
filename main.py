@@ -6,6 +6,7 @@ menu_options = ["Tools", "Games", "Settings", "About"]
 selected = 0
 
 def main():
+    global selected
     display = Display()
     buttons = ButtonHandler()
     display.draw_menu("Main Menu", menu_options, selected)
