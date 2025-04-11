@@ -24,8 +24,8 @@ SPI = spidev.SpiDev(0, 0) # SPI device (bus, device)
 class LCD:
     def __init__(self) -> None:
         self.__setup__()
-        self.init(SCAN_DIR_DFT)
         self.pins = LCD_PINS
+        self.init(SCAN_DIR_DFT)
         self.width = LCD_TYPES[LCD_TYPE]['width']
         self.height = LCD_TYPES[LCD_TYPE]['height']
         self.xadjust = LCD_TYPES[LCD_TYPE]['x_adjust']
