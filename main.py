@@ -13,7 +13,6 @@ def main():
     try:
         while True:
             btn = buttons.get_pressed()
-            global selected
 
             if btn == "UP":
                 selected = (selected - 1) % len(menu_options)
