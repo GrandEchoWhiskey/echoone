@@ -11,13 +11,14 @@ from PIL import ImageColor
 #try:
 def main():
     GPIO_Init()
-    setup_buttons()
     
     LCD = lcd.LCD()
 
     print("**********Init LCD**********")
     Lcd_ScanDir = lcd.SCAN_DIR_DFT  #SCAN_DIR_DFT = D2U_L2R
     LCD.init(Lcd_ScanDir)
+
+    setup_buttons()
 
     image = Image.new("RGB", (LCD.width, LCD.height), "WHITE")
     draw = ImageDraw.Draw(image)
