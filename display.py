@@ -39,9 +39,10 @@ class Display:
 
         x = self.lcd.width - icon_w - 5
 
-        for icon in self.icons.values():
+        for key, icon in self.icons.items():
             icon = ImageOps.invert(icon)  # Invert the icon color
-            icon.convert("RGB")  # Convert to RGB for pasting
+            icon = icon.convert("RGB")  # Convert to RGB for pasting
+            self.icons[key] = icon
 
         positions = {
             'KEY1': (x, 5),
