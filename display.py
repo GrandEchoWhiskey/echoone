@@ -45,6 +45,9 @@ class Display:
             inverted = ImageOps.invert(rgb)  # Invert the RGB channels
             icon = Image.merge("RGBA", (*inverted.split(), a))
             self.icons[key] = icon
+            bg = Image.new("RGB", icon.size, "black")
+            bg.paste(icon, mask=icon.split()[3])  # Use the alpha channel as mask
+            self.icons[key] = bg
 
         positions = {
             'KEY1': (x, 5),
