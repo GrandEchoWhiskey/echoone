@@ -30,9 +30,9 @@ class Display:
 
     def draw_icons(self):
         self.icons = {
-            'KEY1': Image.open("326688_save_floppy_guardar.png").convert("RGB"),
-            'KEY2': Image.open("326704_store.png").convert("RGB"),
-            'KEY3': Image.open("326709_tab.png").convert("RGB")
+            'KEY1': Image.open("icons/326688_save_floppy_guardar.png").convert("RGB"),
+            'KEY2': Image.open("icons/326704_store.png").convert("RGB"),
+            'KEY3': Image.open("icons/326709_tab.png").convert("RGB")
         }
         icon_w = self.icons['KEY1'].width
         icon_h = self.icons['KEY1'].height
