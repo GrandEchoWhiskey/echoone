@@ -30,9 +30,9 @@ class Display:
 
     def draw_icons(self):
         self.icons = {
-            'KEY1': Image.open("icons/326688_save_floppy_guardar.png").convert("L"),
-            'KEY2': Image.open("icons/326704_store.png").convert("L"),
-            'KEY3': Image.open("icons/326709_tab.png").convert("L")
+            'KEY1': Image.open("icons/326688_save_floppy_guardar.png").convert("RGBA"),
+            'KEY2': Image.open("icons/326704_store.png").convert("RGBA"),
+            'KEY3': Image.open("icons/326709_tab.png").convert("RGBA")
         }
         icon_w = self.icons['KEY1'].width
         icon_h = self.icons['KEY1'].height
@@ -40,8 +40,10 @@ class Display:
         x = self.lcd.width - icon_w - 5
 
         for key, icon in self.icons.items():
-            icon = ImageOps.invert(icon)  # Invert the icon color
-            icon = icon.convert("RGB")  # Convert to RGB for pasting
+            r, g, b, a = icon.split()  # Split the RGBA image into its channels
+            rgb = Image.merge("RGB", (r, g, b))
+            inverted = ImageOps.invert(rgb)  # Invert the RGB channels
+            icon = Image.merge("RGBA", (*inverted.split(), a))
             self.icons[key] = icon
 
         positions = {
