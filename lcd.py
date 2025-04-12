@@ -25,12 +25,12 @@ class LCD:
     def __init__(self) -> None:
         self.__setup__()
         self.pins = LCD_PINS
-        self.init(SCAN_DIR_DFT)
         self.width = LCD_TYPES[LCD_TYPE]['width']
         self.height = LCD_TYPES[LCD_TYPE]['height']
         self.xadjust = LCD_TYPES[LCD_TYPE]['x_adjust']
         self.yadjust = LCD_TYPES[LCD_TYPE]['y_adjust']
         self.scandir = SCAN_DIR_DFT
+        self.init(SCAN_DIR_DFT)
 
     def __setup__(self) -> None:
         GPIO.setmode(GPIO.BCM)
@@ -127,9 +127,6 @@ class LCD:
 
     def init(self, scandir) -> int:
         """Initialize the LCD display"""
-        if (GPIO_Init() != 0):
-            return -1
-
         GPIO.output(self.BL_PIN, GPIO.HIGH)
         self.reset()
         self.initReg()
