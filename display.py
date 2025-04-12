@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import lcd
 
 class Display:
@@ -30,14 +30,18 @@ class Display:
 
     def draw_icons(self):
         self.icons = {
-            'KEY1': Image.open("icons/326688_save_floppy_guardar.png").convert("RGB"),
-            'KEY2': Image.open("icons/326704_store.png").convert("RGB"),
-            'KEY3': Image.open("icons/326709_tab.png").convert("RGB")
+            'KEY1': Image.open("icons/326688_save_floppy_guardar.png").convert("L"),
+            'KEY2': Image.open("icons/326704_store.png").convert("L"),
+            'KEY3': Image.open("icons/326709_tab.png").convert("L")
         }
         icon_w = self.icons['KEY1'].width
         icon_h = self.icons['KEY1'].height
 
         x = self.lcd.width - icon_w - 5
+
+        for icon in self.icons.values():
+            icon = ImageOps.invert(icon)  # Invert the icon color
+            icon.convert("RGB")  # Convert to RGB for pasting
 
         positions = {
             'KEY1': (x, 5),
