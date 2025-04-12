@@ -25,5 +25,24 @@ class Display:
                 prefix = ">" if i == selected else " "
                 color = "cyan" if i == selected else "white"
                 self.draw.text((10, y), f"{prefix} {option}", font=self.font, fill=color)
-
+        self.draw_icons()
         self.show()
+
+    def draw_icons(self):
+        self.icons = {
+            'KEY1': Image.open("326688_save_floppy_guardar.png").convert("RGB"),
+            'KEY2': Image.open("326704_store.png").convert("RGB"),
+            'KEY3': Image.open("326709_tab.png").convert("RGB")
+        }
+        icon_w = self.icons['KEY1'].width
+        icon_h = self.icons['KEY1'].height
+
+        x = self.lcd.width - icon_w - 5
+
+        positions = {
+            'KEY1': (x, 5),
+            'KEY2': (x, 5 + icon_h + 5),
+            'KEY3': (x, 5 + 2 * (icon_h + 5))
+        }
+        for name, icon in self.icons.items():
+            self.image.paste(icon, positions[name])
